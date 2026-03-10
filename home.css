@@ -288,7 +288,7 @@
 
 /* ── Tip du jour ── */
 .home-tip {
-  margin: 4px 20px 0;
+  margin: 12px 20px 12px;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-left: 3px solid var(--orange);
@@ -424,12 +424,11 @@
 
 /* ── Check-in du jour ── */
 .home-checkin {
-  margin: 0 20px;
+  margin: 0 20px 12px;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: var(--r-lg);
   padding: 16px;
-  margin-bottom: 8px;
 }
 .home-checkin-title {
   font-family: 'Sora', sans-serif;
