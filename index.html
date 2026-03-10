@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="home.css">
 </head>
 <body>
 
@@ -309,14 +310,7 @@
        HOME / PROGRAMME / PROFIL
        (à venir — étapes suivantes)
   ════════════════════════════════════════ -->
-  <div class="screen" id="screen-home">
-    <div class="screen-body" style="display:flex;align-items:center;justify-content:center;padding:40px">
-      <div style="text-align:center;color:var(--muted)">
-        <div style="font-size:48px;margin-bottom:12px">🦁</div>
-        <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--text)">Home — étape 2</div>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-home"></div>
 
   <div class="screen" id="screen-program">
     <div class="screen-body" style="display:flex;align-items:center;justify-content:center;padding:40px">
@@ -362,21 +356,14 @@
 
 </div><!-- #app -->
 
-<!-- JS — ordre important -->
 <script src="state.js"></script>
 <script src="router.js"></script>
 <script src="ui.js"></script>
 <script src="supabase.js"></script>
 <script src="auth.js"></script>
+<script src="home.js"></script>
 
 <script>
-  // Render stub (sera rempli aux étapes suivantes)
-  const Render = {
-    home()    { console.log('Render.home — à venir'); },
-    program() { console.log('Render.program — à venir'); },
-    profile() { console.log('Render.profile — à venir'); },
-  };
-
   // Démarrage
   document.addEventListener('DOMContentLoaded', initApp);
 </script>
