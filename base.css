@@ -379,63 +379,119 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════
-   NAVIGATION BAS
+   NAVIGATION BAS — STYLE WEWARD
+   Pill sombre flottante, arrondie, ombre forte
 ══════════════════════════════════════════════════════ */
 .bottom-nav {
-  background: var(--nav-bg);
-  border-radius: 22px 22px 0 0;
-  padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+  /* Flottante comme WeWard */
+  position: fixed;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 448px;
+  z-index: 100;
+
+  /* Pill sombre */
+  background: #1A1A1F;
+  border-radius: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.40), 0 2px 8px rgba(0,0,0,0.25);
+
+  padding: 8px 12px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 4px;
+}
+
+/* Espace sous le contenu scrollable pour pas être caché par la nav */
+.nav-spacer {
+  height: calc(80px + env(safe-area-inset-bottom));
   flex-shrink: 0;
-  position: relative;
-  z-index: 50;
 }
 
 .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  min-width: 64px;
-  padding: 6px 8px;
+  gap: 4px;
+  flex: 1;
+  padding: 8px 4px 6px;
   background: none;
   border: none;
   cursor: pointer;
-  border-radius: var(--r-md);
+  border-radius: 20px;
   transition: background var(--dur-fast);
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
 }
-.nav-item:active { background: rgba(255,255,255,0.05); }
+.nav-item:active { background: rgba(255,255,255,0.06); }
+
+/* Icône — fond pill sur l'actif */
+.nav-item-icon-wrap {
+  position: relative;
+  width: 44px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  transition: background var(--dur-normal);
+}
+.nav-item.active .nav-item-icon-wrap {
+  background: rgba(255, 107, 0, 0.15);
+}
 
 .nav-item-icon {
   font-size: 22px;
   line-height: 1;
-  filter: grayscale(1);
-  opacity: 0.35;
-  transition: filter var(--dur-normal), opacity var(--dur-normal), transform var(--dur-fast);
+  opacity: 0.38;
+  transition: opacity var(--dur-normal), transform var(--dur-normal) var(--ease-bounce);
 }
+.nav-item.active .nav-item-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 .nav-item-label {
   font-family: 'Inter', sans-serif;
   font-size: 10px;
   font-weight: 600;
-  color: var(--nav-text);
+  color: #555;
   transition: color var(--dur-normal);
+  white-space: nowrap;
 }
-.nav-item-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--nav-active);
-  opacity: 0;
-  transition: opacity var(--dur-normal), transform var(--dur-normal);
-  transform: scale(0);
-}
+.nav-item.active .nav-item-label { color: var(--orange); }
 
-/* Onglet actif */
-.nav-item.active .nav-item-icon  { filter: none; opacity: 1; transform: translateY(-2px); }
-.nav-item.active .nav-item-label { color: var(--nav-active); }
-.nav-item.active .nav-item-dot   { opacity: 1; transform: scale(1); }
+/* Badge notification (style WeWard) */
+.nav-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1A1A1F;
+  line-height: 1;
+}
+.nav-badge.orange {
+  background: var(--orange);
+}
+.nav-badge.new-badge {
+  background: var(--green);
+  font-size: 9px;
+  padding: 0 5px;
+}
 
 /* ══════════════════════════════════════════════════════
    TOAST
