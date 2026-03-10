@@ -458,11 +458,15 @@ const Prog = (() => {
   }
 
   function launchWorkout() {
-    const plan=AI.getTodayPlan(STATE.currentProgram,STATE.checkinMood,STATE.checkinEnergy);
-    if(!plan) return;
-    STATE.activeWorkout=plan;
+    const plan = AI.getTodayPlan(STATE.currentProgram, STATE.checkinMood, STATE.checkinEnergy);
+    if (!plan || !plan.exercises || plan.exercises.length === 0) {
+      showToast('Pas d\'exercices pour aujourd\'hui.', 'info');
+      return;
+    }
+    STATE.activeWorkout = plan;
     navigate('seance');
-    showToast("🔥 C'est parti !",'success');
+    // Initialise le moteur de séance après la navigation
+    setTimeout(() => Seance.init(plan), 50);
   }
 
   /* ═══ HELPERS ═══ */
