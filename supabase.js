@@ -4,8 +4,8 @@
    ⚠️  Remplacer SB_URL et SB_KEY par tes vraies valeurs.
 ═══════════════════════════════════════════════════════ */
 
-const SB_URL = 'https://jjrqduyoqilfbilfqegy.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqcnFkdXlvcWlsZmJpbGZxZWd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5NjIxNTksImV4cCI6MjA4ODUzODE1OX0.RMstrgHal09iKiPA5QwSSsgqhRVqU094zzv1cFejxzw';
+const SB_URL = 'REMPLACER_PAR_TON_URL_SUPABASE';
+const SB_KEY = 'REMPLACER_PAR_TA_CLÉ_SUPABASE';
 
 /* ── Client minimaliste (pas de SDK — fetch natif) ── */
 const SB = {
@@ -195,5 +195,23 @@ const DB = {
     STATE.referralCode        = row.referral_code  || '';
     STATE.referralCount       = row.referral_count || 0;
     STATE.referralMonths      = row.referral_months || 0;
+  },
+
+  /** Upsert générique (patch si l'id existe) */
+  async upsert(table, body) {
+    try {
+      return await SB.post(table, body);
+    } catch(e) {
+      // Si conflit, on patch
+      try {
+        const id = body.id || body.user_id;
+        if (id) return await SB.patch(table, `?id=eq.${id}`, body);
+      } catch(e2) {}
+    }
+  },
+
+  /** Insert générique */
+  async insert(table, body) {
+    try { return await SB.post(table, body); } catch(e) { console.warn(`DB.insert ${table}:`, e); }
   },
 };
