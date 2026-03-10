@@ -217,8 +217,8 @@ const Render = {
           ${challenges.map(c => _buildChallengeCard(c)).join('')}
         </div>
 
-        <!-- Padding bas nav -->
-        <div style="height:16px"></div>
+        <!-- Spacer nav flottante -->
+        <div class="nav-spacer"></div>
       </div>
     `;
 
