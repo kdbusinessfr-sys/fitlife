@@ -290,8 +290,9 @@ const Prog = (() => {
       saveProgramToStorage(program);
       saveProfileToStorage();
 
+      // Sauvegarder tout en DB (programme + profil fitness)
       if (STATE.user?.id) {
-        DB.upsert('profiles', { id:STATE.user.id, program_data:JSON.stringify(program), fitness_level:STATE.profile.level, goal:STATE.profile.goal, session_days:STATE.profile.days, session_time:STATE.profile.sessionTime, age_group:STATE.profile.ageGroup }).catch(()=>{});
+        DB.saveProfile(STATE.user.id).catch(() => {});
       }
 
       _phase = 'program';
@@ -476,7 +477,15 @@ const Prog = (() => {
     return all;
   }
   function isCompleted(day,weekNum) { return (STATE.completedDays||new Set()).has(`w${weekNum}_d${day.day}`); }
-  function saveProgramToStorage(p) { try{localStorage.setItem('fitlife_program',JSON.stringify(p));}catch(e){} }
+  function saveProgramToStorage(p) {
+    try { localStorage.setItem('fitlife_program', JSON.stringify(p)); } catch(e) {}
+    // Sauvegarder aussi les jours complétés
+    try {
+      if (STATE.completedDays) {
+        localStorage.setItem('fitlife_completedDays', JSON.stringify([...STATE.completedDays]));
+      }
+    } catch(e) {}
+  }
   function saveProfileToStorage() {
     try{const p=STATE.profile; localStorage.setItem('fitlife_profile',JSON.stringify({ageGroup:p.ageGroup,goal:p.goal,level:p.level,days:p.days,sessionTime:p.sessionTime,healthConditions:[...(p.healthConditions||[])]}));}catch(e){}
   }
