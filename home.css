@@ -1,0 +1,477 @@
+/* ═══════════════════════════════════════════════════════
+   FITLIFE IA — HOME SCREEN
+═══════════════════════════════════════════════════════ */
+
+/* ── Top bar ── */
+.home-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px 12px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.home-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-topbar-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--orange-muted);
+  border: 2px solid var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--orange);
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.home-topbar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-topbar-greet {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.home-topbar-greet span {
+  color: var(--orange);
+}
+.home-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.home-notif-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  position: relative;
+}
+.home-notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 2px solid var(--bg);
+}
+
+/* ── Pills stats ── */
+.home-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px 4px;
+  flex-wrap: wrap;
+}
+
+/* ── Jauge principale ── */
+.home-gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 20px 4px;
+  position: relative;
+}
+.home-gauge-svg-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-gauge-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+/* Track (fond) */
+.gauge-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 14;
+}
+/* Fill animé */
+.gauge-fill {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 14;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.34, 1.1, 0.64, 1);
+  filter: drop-shadow(0 0 6px rgba(255, 107, 0, 0.45));
+}
+/* Jalons sur la jauge */
+.gauge-milestone {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+}
+.gauge-milestone-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border2);
+  border: 2px solid var(--bg);
+  transition: background 0.3s;
+}
+.gauge-milestone-dot.reached {
+  background: var(--orange);
+}
+.gauge-milestone-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+/* Centre jauge */
+.home-gauge-center {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.home-gauge-val {
+  font-family: 'Sora', sans-serif;
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -2px;
+  line-height: 1;
+}
+.home-gauge-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.home-gauge-next {
+  font-size: 11px;
+  color: var(--orange);
+  font-weight: 700;
+  background: var(--orange-muted);
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+  margin-top: 4px;
+}
+
+/* ── CTA principal ── */
+.home-cta-wrap {
+  padding: 12px 20px 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.home-cta-main {
+  flex: 1;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-full);
+  padding: 16px 24px;
+  font-family: 'Sora', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-accent);
+  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.home-cta-main:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(255,107,0,0.25);
+}
+.home-cta-share {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--dur-fast);
+}
+.home-cta-share:active { background: var(--border); }
+
+/* ── Stat cards mini (scroll horizontal) ── */
+.home-stats-scroll {
+  display: flex;
+  gap: 10px;
+  padding: 8px 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+.home-stats-scroll::-webkit-scrollbar { display: none; }
+
+.home-stat-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  min-width: 130px;
+  cursor: pointer;
+  transition: border-color var(--dur-fast);
+}
+.home-stat-card:active { border-color: var(--orange); }
+.home-stat-icon { font-size: 24px; flex-shrink: 0; }
+.home-stat-info {}
+.home-stat-val {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+}
+.home-stat-lbl {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+/* Barre de progression dans stat card */
+.home-stat-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: var(--r-full);
+  margin-top: 6px;
+  overflow: hidden;
+}
+.home-stat-bar-fill {
+  height: 100%;
+  border-radius: var(--r-full);
+  background: var(--orange);
+  transition: width 0.8s var(--ease-bounce);
+}
+
+/* ── Tip du jour ── */
+.home-tip {
+  margin: 4px 20px 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.home-tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.home-tip-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ── Section header ── */
+.home-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 10px;
+}
+.home-section-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+}
+.home-section-action {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--orange);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Galerie challenges (scroll horizontal style WeWard) ── */
+.home-challenges-scroll {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.home-challenges-scroll::-webkit-scrollbar { display: none; }
+
+.challenge-card {
+  flex-shrink: 0;
+  width: 160px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: transform var(--dur-fast);
+}
+.challenge-card:active { transform: scale(0.96); }
+
+.challenge-card-img {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  position: relative;
+  overflow: hidden;
+}
+/* Overlay gradient en bas de l'image */
+.challenge-card-img::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.25));
+}
+.challenge-pts-pill {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: var(--r-full);
+  z-index: 1;
+}
+.challenge-done-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.challenge-card-body {
+  padding: 10px 12px 12px;
+}
+.challenge-card-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+.challenge-card-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Couleurs par catégorie */
+.ch-cardio   { background: linear-gradient(135deg, #FF6B00, #E53E00); }
+.ch-force    { background: linear-gradient(135deg, #7C3AED, #5B21B6); }
+.ch-nutrition{ background: linear-gradient(135deg, #16A34A, #15803D); }
+.ch-mental   { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
+.ch-mobilite { background: linear-gradient(135deg, #D97706, #B45309); }
+
+/* ── Check-in du jour ── */
+.home-checkin {
+  margin: 0 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  margin-bottom: 8px;
+}
+.home-checkin-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.home-checkin-done {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--green);
+  font-weight: 600;
+}
+.home-moods {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+.mood-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.mood-btn:active { transform: scale(0.95); }
+.mood-btn.selected {
+  border-color: var(--orange);
+  background: var(--orange-muted);
+}
+.mood-emoji { font-size: 22px; line-height: 1; }
+.mood-label { font-size: 9px; color: var(--muted); font-weight: 600; text-align: center; }
+.mood-btn.selected .mood-label { color: var(--orange); }
