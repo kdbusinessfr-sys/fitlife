@@ -4,8 +4,8 @@
    ⚠️  Remplacer SB_URL et SB_KEY par tes vraies valeurs.
 ═══════════════════════════════════════════════════════ */
 
-const SB_URL = 'REMPLACER_PAR_TON_URL_SUPABASE';
-const SB_KEY = 'REMPLACER_PAR_TA_CLÉ_SUPABASE';
+const SB_URL = 'https://jjrqduyoqilfbilfqegy.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqcnFkdXlvcWlsZmJpbGZxZWd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5NjIxNTksImV4cCI6MjA4ODUzODE1OX0.RMstrgHal09iKiPA5QwSSsgqhRVqU094zzv1cFejxzw';
 
 /* ── Client minimaliste (pas de SDK — fetch natif) ── */
 const SB = {
