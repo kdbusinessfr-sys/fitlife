@@ -185,8 +185,8 @@ const Render = {
 
         <!-- CTA principal -->
         <div class="home-cta-wrap">
-          <button class="home-cta-main" onclick="navigate('program')">
-            🏋️ Lancer ma séance
+          <button class="home-cta-main" onclick="_launchOrProgram()">
+            ▶ Commence ma séance
           </button>
           <div class="home-cta-share" onclick="_shareApp()" title="Parrainer un ami">🎁</div>
         </div>
@@ -437,4 +437,27 @@ function _animateCounter(id, from, to, duration) {
 
 function _easeOut(t) {
   return 1 - Math.pow(1 - t, 3);
+}
+
+/* ══════════════════════════════════════════════════════
+   BOUTON HOME → SÉANCE INTELLIGENTE
+   Si le programme existe : lance directement la séance
+   Sinon : va sur l'écran programme pour en créer un
+══════════════════════════════════════════════════════ */
+function _launchOrProgram() {
+  if (STATE.currentProgram && STATE.currentProgram.weeks) {
+    // Programme existant → lancer la séance du jour directement
+    const plan = AI.getTodayPlan(STATE.currentProgram, STATE.checkinMood, STATE.checkinEnergy);
+    if (plan && plan.exercises && plan.exercises.length > 0) {
+      STATE.activeWorkout = plan;
+      navigate('seance');
+      setTimeout(() => Seance.init(plan), 50);
+      return;
+    }
+  }
+  // Pas de programme → aller créer un programme
+  navigate('programme');
+  setTimeout(() => {
+    if (typeof Prog !== 'undefined') { Prog.init(); Prog.render(); }
+  }, 50);
 }
