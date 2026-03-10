@@ -333,21 +333,25 @@
   <!-- ════════════════════════════════════════
        NAV BAR (cachée sur auth)
   ════════════════════════════════════════ -->
-  <nav class="bottom-nav" id="bottom-nav" style="display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:50">
+  <nav class="bottom-nav" id="bottom-nav" style="display:none">
     <button class="nav-item active" data-tab="home" onclick="navigate('home')">
-      <div class="nav-item-icon">🏠</div>
+      <div class="nav-item-icon-wrap">
+        <div class="nav-item-icon">🏠</div>
+      </div>
       <div class="nav-item-label">Accueil</div>
-      <div class="nav-item-dot"></div>
     </button>
     <button class="nav-item" data-tab="program" onclick="navigate('program')">
-      <div class="nav-item-icon">🏋️</div>
+      <div class="nav-item-icon-wrap">
+        <div class="nav-item-icon">🏋️</div>
+        <div class="nav-badge orange" id="nav-badge-program" style="display:none">!</div>
+      </div>
       <div class="nav-item-label">Programme</div>
-      <div class="nav-item-dot"></div>
     </button>
     <button class="nav-item" data-tab="profile" onclick="navigate('profile')">
-      <div class="nav-item-icon">👤</div>
+      <div class="nav-item-icon-wrap">
+        <div class="nav-item-icon">👤</div>
+      </div>
       <div class="nav-item-label">Profil</div>
-      <div class="nav-item-dot"></div>
     </button>
   </nav>
 
