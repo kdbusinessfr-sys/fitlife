@@ -229,16 +229,9 @@ const Render = {
   },
 
   program() {
-    const screen = document.getElementById('screen-program');
-    if (!screen) return;
-    screen.innerHTML = `
-      <div class="screen-body" style="display:flex;align-items:center;justify-content:center;padding:40px">
-        <div style="text-align:center;color:var(--muted)">
-          <div style="font-size:48px;margin-bottom:12px">🏋️</div>
-          <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--text)">Programme — étape 3</div>
-        </div>
-      </div>
-    `;
+    // Redirige vers l'écran programme correct
+    navigate('programme');
+    setTimeout(() => { try { Prog.init(); Prog.render(); } catch(e) {} }, 0);
   },
 
   profile() {
@@ -357,7 +350,14 @@ function _doCheckin(mood) {
   STATE.checkinMood   = mood;
   STATE.checkinStreak = (STATE.checkinStreak || 0) + 1;
   STATE.points       += 20;
+
+  // Sauvegarder localement
   if (STATE.user?.id) STATE.saveLocal(STATE.user.id);
+
+  // Sauvegarder les points en DB
+  if (STATE.user?.id) {
+    DB.saveProfile(STATE.user.id).catch(() => {});
+  }
 
   const msgs = {
     top:     '🔥 Tu es en feu aujourd\'hui !',
@@ -380,7 +380,12 @@ function _doChallenge(id) {
 
   STATE.challengesDone.add(id);
   STATE.points += ch.pts;
-  if (STATE.user?.id) STATE.saveLocal(STATE.user.id);
+
+  // Sauvegarder localement + en DB
+  if (STATE.user?.id) {
+    STATE.saveLocal(STATE.user.id);
+    DB.saveProfile(STATE.user.id).catch(() => {});
+  }
 
   showToast(`+${ch.pts} pts — ${ch.name} complété ! 🎯`, 'success');
   Render.home();
