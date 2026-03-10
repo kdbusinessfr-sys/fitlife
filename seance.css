@@ -972,3 +972,227 @@
   0% { transform: scale(0.85); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+
+/* ══════════════════════════════════════════════════════
+   VIDÉO YOUTUBE — Zone exercice actif
+══════════════════════════════════════════════════════ */
+.seance-video-wrap {
+  width: 100%;
+  margin: 0 0 16px;
+  position: relative;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #000;
+}
+
+.seance-iframe-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.seance-video-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.seance-video-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+}
+
+.seance-exo-emoji-fallback {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  font-size: 72px;
+  border-radius: var(--r-lg);
+  animation: exercise-bounce 2s ease-in-out infinite;
+}
+
+@keyframes exercise-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-8px) scale(1.06); }
+}
+
+/* Muscles chips */
+.seance-muscles-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.seance-muscle-chip {
+  background: var(--orange-muted);
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  border: 1px solid rgba(255,107,0,0.20);
+}
+
+/* Instruction collapsable */
+.seance-details-block {
+  background: var(--surface);
+  border-radius: var(--r-md);
+  margin-bottom: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid var(--orange);
+  overflow: hidden;
+}
+
+.seance-details-summary {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--orange);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.seance-details-summary::-webkit-details-marker { display: none; }
+.seance-details-block[open] .seance-details-summary::after { content: '▲'; margin-left: auto; font-size: 10px; }
+.seance-details-block:not([open]) .seance-details-summary::after { content: '▼'; margin-left: auto; font-size: 10px; }
+
+.seance-instruction-text {
+  padding: 0 16px 14px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.65;
+}
+
+/* Mode manuel : grand affichage reps */
+.seance-manual-reps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px 0 16px;
+}
+
+.seance-reps-number {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 64px;
+  color: var(--orange);
+  line-height: 1;
+}
+
+.seance-reps-unit {
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Sets tracker header */
+.seance-sets-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.seance-sets-count {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--orange);
+}
+
+.seance-repos-info {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+/* Overview mood chip */
+.seance-mood-chip {
+  display: inline-flex;
+  background: var(--orange-muted);
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--r-full);
+  margin-bottom: 10px;
+}
+
+/* Mode description */
+.seance-mode-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 8px 4px 0;
+  line-height: 1.5;
+}
+
+/* Overview card muscles chips */
+.seance-exo-muscles-chips {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.seance-exo-muscles-chips span {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg2);
+  padding: 2px 6px;
+  border-radius: var(--r-full);
+}
+
+.exo-repos-tag {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* Voice toggle button */
+.btn-voice-toggle {
+  width: 34px; height: 34px;
+  border: none;
+  border-radius: var(--r-full);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.15s ease;
+}
+
+.btn-voice-toggle.on  { background: var(--orange-muted); }
+.btn-voice-toggle.off { background: var(--bg2); opacity: 0.5; }
+
+/* ══ Grand écran (casting / tablet) ══ */
+@media (min-width: 640px) {
+  .seance-iframe-wrap { aspect-ratio: 16 / 9; max-height: 360px; }
+  .seance-active      { max-width: 600px; margin: 0 auto; }
+}
