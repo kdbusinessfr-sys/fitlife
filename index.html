@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="auth.css">
   <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="programme.css">
 </head>
 <body>
 
@@ -312,12 +313,12 @@
   ════════════════════════════════════════ -->
   <div class="screen" id="screen-home"></div>
 
-  <div class="screen" id="screen-program">
-    <div class="screen-body" style="display:flex;align-items:center;justify-content:center;padding:40px">
-      <div style="text-align:center;color:var(--muted)">
-        <div style="font-size:48px;margin-bottom:12px">🏋️</div>
-        <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--text)">Programme — étape 3</div>
+  <div class="screen" id="screen-programme">
+    <div class="screen-body">
+      <div id="prog-content">
+        <!-- Rendu dynamique par Prog.render() -->
       </div>
+      <div class="nav-spacer"></div>
     </div>
   </div>
 
@@ -340,10 +341,10 @@
       </div>
       <div class="nav-item-label">Accueil</div>
     </button>
-    <button class="nav-item" data-tab="program" onclick="navigate('program')">
+    <button class="nav-item" data-tab="programme" onclick="navigate('programme')">
       <div class="nav-item-icon-wrap">
         <div class="nav-item-icon">🏋️</div>
-        <div class="nav-badge orange" id="nav-badge-program" style="display:none">!</div>
+        <div class="nav-badge orange" id="nav-badge-programme" style="display:none">!</div>
       </div>
       <div class="nav-item-label">Programme</div>
     </button>
@@ -366,6 +367,8 @@
 <script src="supabase.js"></script>
 <script src="auth.js"></script>
 <script src="home.js"></script>
+<script src="ai.js"></script>
+<script src="programme.js"></script>
 
 <script>
   // Démarrage
