@@ -11,11 +11,11 @@ const SCREENS = {
   login:    { id: 'screen-login',    nav: false, onEnter: null },
   signup:   { id: 'screen-signup',   nav: false, onEnter: null },
   forgot:   { id: 'screen-forgot',   nav: false, onEnter: null },
-  home:     { id: 'screen-home',     nav: true,  tab: 'home',    onEnter: () => Render.home() },
-  program:  { id: 'screen-program',  nav: true,  tab: 'program', onEnter: () => Render.program() },
-  profile:  { id: 'screen-profile',  nav: true,  tab: 'profile', onEnter: () => Render.profile() },
-  workout:  { id: 'screen-workout',  nav: false, onEnter: null },
-  results:  { id: 'screen-results',  nav: false, onEnter: null },
+  home:      { id: 'screen-home',      nav: true,  tab: 'home',      onEnter: () => Render.home() },
+  programme: { id: 'screen-programme', nav: true,  tab: 'programme', onEnter: () => { Prog.init(); Prog.render(); } },
+  profile:   { id: 'screen-profile',   nav: true,  tab: 'profile',   onEnter: () => {} },
+  seance:    { id: 'screen-seance',     nav: false, onEnter: null },
+  results:   { id: 'screen-results',   nav: false, onEnter: null },
 };
 
 let _currentScreen = null;
