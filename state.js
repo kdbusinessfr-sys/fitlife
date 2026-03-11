@@ -8,7 +8,7 @@
 const STATE = {
 
   /* ── Auth ── */
-  user: null,          // { id, email, firstName, lastName, initials, avatarUrl? }
+  user: null,          // { id, email, firstName, lastName, initials, gender?, birthYear? }
   session: null,       // session Supabase
 
   /* ── Profil & Objectifs ── */
@@ -81,6 +81,10 @@ const STATE = {
       level: '', goal: '', days: 3, sessionTime: 30,
       ageGroup: '25', targetKg: null, healthConditions: new Set(),
     };
+    if (this.user) {
+      this.user.gender    = '';
+      this.user.birthYear = '';
+    }
   },
 
   /** Charge depuis localStorage (thème uniquement avant auth) */
