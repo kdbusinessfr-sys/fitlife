@@ -9,6 +9,7 @@
   <title>FitLife IA</title>
 
   <!-- CSS -->  <style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 /* ══ tokens.css ══ */
 /* ═══════════════════════════════════════════════════════
@@ -106,7 +107,6 @@
    partagés (boutons, inputs, toasts, nav).
 ═══════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 /* ── Reset ── */
 *, *::before, *::after {
@@ -5557,8 +5557,12 @@ body {
 <script src="profile.js"></script>
 
 <script>
-  // Démarrage
-  document.addEventListener('DOMContentLoaded', initApp);
+  // Démarrage — appel direct après chargement de tous les scripts
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
 </script>
 
 </body>
