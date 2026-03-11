@@ -106,7 +106,7 @@ const STATE = {
       checkinMood:    this.checkinMood,
       checkinEnergy:  this.checkinEnergy,
       checkinStreak:  this.checkinStreak,
-      checkinDate:    new Date().toISOString().split('T')[0],
+      checkinDate:    new Date().toLocaleDateString('fr-CA'),
       unlockedBadges: [...this.unlockedBadges],
       streakShields:  this.streakShields,
       challengesDone: [...this.challengesDone],
@@ -121,7 +121,7 @@ const STATE = {
       const raw  = localStorage.getItem(key);
       if (!raw) return;
       const data = JSON.parse(raw);
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toLocaleDateString('fr-CA');
       // Check-in valable seulement aujourd'hui
       if (data.checkinDate === today) {
         this.checkinDone   = data.checkinDone   || false;
