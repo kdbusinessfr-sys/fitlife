@@ -235,16 +235,8 @@ const Render = {
   },
 
   profile() {
-    const screen = document.getElementById('screen-profile');
-    if (!screen) return;
-    screen.innerHTML = `
-      <div class="screen-body" style="display:flex;align-items:center;justify-content:center;padding:40px">
-        <div style="text-align:center;color:var(--muted)">
-          <div style="font-size:48px;margin-bottom:12px">👤</div>
-          <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--text)">Profil — étape 4</div>
-        </div>
-      </div>
-    `;
+    // Délégué à Profile module
+    if (typeof Profile !== 'undefined') { Profile.init(); Profile.render(); }
   },
 };
 
