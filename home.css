@@ -474,3 +474,158 @@
 .mood-emoji { font-size: 22px; line-height: 1; }
 .mood-label { font-size: 9px; color: var(--muted); font-weight: 600; text-align: center; }
 .mood-btn.selected .mood-label { color: var(--orange); }
+
+/* ══════════════════════════════════════════════════════
+   SÉANCES BONUS — galerie horizontale
+══════════════════════════════════════════════════════ */
+.home-bonus-scroll {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.home-bonus-scroll::-webkit-scrollbar { display: none; }
+
+.bonus-card {
+  flex-shrink: 0;
+  width: 152px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-bounce), box-shadow 0.15s ease;
+}
+.bonus-card:active {
+  transform: scale(0.95);
+  box-shadow: var(--shadow-accent);
+}
+
+.bonus-card-bg {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.bonus-card-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 36px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.28));
+}
+
+.bonus-card-icon {
+  font-size: 42px;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.25));
+  animation: bonusFloat 3s ease-in-out infinite;
+}
+@keyframes bonusFloat {
+  0%,100% { transform: translateY(0);    }
+  50%      { transform: translateY(-5px); }
+}
+
+.bonus-pts-pill {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--r-full);
+  z-index: 1;
+}
+
+.bonus-card-body {
+  padding: 10px 12px 12px;
+}
+.bonus-card-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.bonus-card-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.bonus-card-exos {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--orange);
+  background: var(--orange-muted);
+  padding: 2px 7px;
+  border-radius: var(--r-full);
+}
+
+/* ══════════════════════════════════════════════════════
+   POP-UP COMPTE — styles des inputs et boutons genre
+══════════════════════════════════════════════════════ */
+.acc-field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+.acc-field-label:first-of-type { margin-top: 0; }
+
+.acc-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 13px 15px;
+  font-size: 15px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.acc-input:focus {
+  border-color: var(--orange);
+  background: var(--input-focus);
+}
+
+.acc-gender-row {
+  display: flex;
+  gap: 8px;
+}
+.acc-gender-btn {
+  flex: 1;
+  padding: 11px 6px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border);
+  background: var(--bg2);
+  color: var(--text2);
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+.acc-gender-btn:active { transform: scale(0.96); }
+.acc-gender-active {
+  border-color: var(--orange);
+  background: var(--orange-muted);
+  color: var(--orange);
+}
