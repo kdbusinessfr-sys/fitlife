@@ -7,15 +7,15 @@
 
 /** Toutes les configurations d'écrans */
 const SCREENS = {
-  splash:   { id: 'screen-splash',   nav: false, onEnter: null },
-  login:    { id: 'screen-login',    nav: false, onEnter: null },
-  signup:   { id: 'screen-signup',   nav: false, onEnter: null },
-  forgot:   { id: 'screen-forgot',   nav: false, onEnter: null },
+  splash:    { id: 'screen-splash',    nav: false, onEnter: null },
+  login:     { id: 'screen-login',     nav: false, onEnter: null },
+  signup:    { id: 'screen-signup',    nav: false, onEnter: null },
+  forgot:    { id: 'screen-forgot',    nav: false, onEnter: null },
   home:      { id: 'screen-home',      nav: true,  tab: 'home',      onEnter: () => Render.home() },
   programme: { id: 'screen-programme', nav: true,  tab: 'programme', onEnter: () => { Prog.init(); Prog.render(); } },
   wellbeing: { id: 'screen-wellbeing', nav: true,  tab: 'wellbeing', onEnter: () => { Wellbeing.init(); Wellbeing.render(); } },
-  seance:    { id: 'screen-seance',     nav: false, onEnter: null },
-  results:   { id: 'screen-results',   nav: false, onEnter: null },
+  profile:   { id: 'screen-profile',   nav: true,  tab: 'profile',   onEnter: () => { Profile.init(); Profile.render(); } },
+  seance:    { id: 'screen-seance',    nav: false, onEnter: null },
 };
 
 let _currentScreen = null;
