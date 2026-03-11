@@ -992,3 +992,19 @@
   background: var(--surface);
   color: var(--text);
 }
+
+/* Bouton annuler questionnaire (étape 1) */
+.quiz-cancel-btn {
+  background: var(--red-muted);
+  border: none;
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  font-size: 16px;
+  color: var(--red);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease;
+}
+.quiz-cancel-btn:active { background: var(--red); color: #fff; }
