@@ -144,7 +144,9 @@ const STATE = {
 function applyTheme(mode) {
   const root = document.documentElement;
   if (mode === 'auto') {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDark = window.matchMedia
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
     root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
   } else {
     root.setAttribute('data-theme', mode);
@@ -162,10 +164,12 @@ function cycleTheme() {
 }
 
 /* Écouter les changements système en mode auto */
-window.matchMedia('(prefers-color-scheme: dark)')
-  .addEventListener('change', () => {
-    if (STATE.theme === 'auto') applyTheme('auto');
-  });
+if (window.matchMedia) {
+  window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', () => {
+      if (STATE.theme === 'auto') applyTheme('auto');
+    });
+}
 
 /* Appliquer le thème dès le chargement */
 STATE.loadTheme();
