@@ -57,8 +57,7 @@ const Profile = (() => {
     const screen = document.getElementById('screen-profile');
     if (!screen) return;
 
-    const body = screen.querySelector('.screen-body') || screen;
-    body.style.cssText = ''; // Reset inline styles du placeholder
+    // screen-profile est vide : on écrit directement dedans
 
     const user     = STATE.user     || {};
     const points   = STATE.points   || 0;
