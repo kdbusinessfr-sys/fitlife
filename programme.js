@@ -8,6 +8,7 @@ const Prog = (() => {
 
   let _openDayCard   = null;
   let _currentWeekView = null;
+  let _savedProgram  = null;
   let _phase = 'idle';
 
   let _draft = {
@@ -316,6 +317,7 @@ const Prog = (() => {
     _draft.days          = String(STATE.profile.days || '');
     _draft.sessionTime   = String(STATE.profile.sessionTime || '');
     _draft.healthConditions = new Set(STATE.profile.healthConditions || []);
+    _savedProgram = STATE.currentProgram; // sauvegarde pour annuler
     STATE.currentProgram = null;
     localStorage.removeItem('fitlife_program');
     _openDayCard = null; _stepIdx = 0; _phase = 'questionnaire';
@@ -498,12 +500,17 @@ const Prog = (() => {
   /* ─── Annuler le questionnaire ─── */
   function cancelQuestionnaire() {
     _stepIdx = 0;
+    // Restaurer le programme sauvegardé si on annule une modification
+    if (_savedProgram) {
+      STATE.currentProgram = _savedProgram;
+      localStorage.setItem('fitlife_program', JSON.stringify(_savedProgram));
+      _savedProgram = null;
+    }
     if (STATE.currentProgram) {
-      // Programme existant : revenir à l'affichage du programme
       _phase = 'program';
-      renderProgram(document.getElementById('prog-content'));
+      const container = document.getElementById('prog-content');
+      if (container) renderProgram(container);
     } else {
-      // Pas de programme : revenir à la page d'accueil
       navigate('home');
       setTimeout(() => Render.home(), 50);
     }
