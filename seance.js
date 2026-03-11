@@ -307,25 +307,25 @@ const Seance = (() => {
     const exo = exos[_state.exoIdx];
     if (!exo) { finishWorkout(); return; }
 
-    const totalExos = exos.length;
-    const progress = Math.round((_state.exoIdx / totalExos) * 100);
-    const totalSets = exo.sets || 3;
-    const currentSet = _state.setIdx + 1;
-    const instruction = INSTRUCTIONS[exo.id] || `Effectue ${exo.reps} répétitions avec une technique propre. Respiration régulière.`;
-    const isAuto = _state.mode === 'auto';
-    const isTimedRep = String(exo.reps).includes('min') || String(exo.reps).includes('s');
-    const ytId = EXO_VIDEOS[exo.id];
-    const isLastSet = currentSet === totalSets;
-    const isLastExo = _state.exoIdx === totalExos - 1;
+    const totalExos   = exos.length;
+    const progress    = Math.round((_state.exoIdx / totalExos) * 100);
+    const totalSets   = exo.sets || 3;
+    const currentSet  = _state.setIdx + 1;
+    const instruction = INSTRUCTIONS[exo.id] || `Effectue ${exo.reps} répétitions avec une technique propre. Maintiens le dos droit et respire régulièrement.`;
+    const isTimedRep  = String(exo.reps).includes('min') || String(exo.reps).includes('s');
+    const ytId        = EXO_VIDEOS[exo.id];
+    const isLastSet   = currentSet === totalSets;
+    const isLastExo   = _state.exoIdx === totalExos - 1;
 
     container.innerHTML = `
-    <!-- Barre progression globale -->
+    <!-- Barre de progression globale -->
     <div class="seance-global-progress">
       <div class="seance-global-fill" style="width:${progress}%"></div>
     </div>
 
     <div class="seance-active">
-      <!-- Header -->
+
+      <!-- Header compact -->
       <div class="seance-active-header">
         <div class="seance-active-counter">Exercice ${_state.exoIdx + 1}/${totalExos}</div>
         <div class="seance-active-label">${exo.nom}</div>
@@ -340,56 +340,64 @@ const Seance = (() => {
       <!-- Zone principale scrollable -->
       <div class="seance-main">
 
-        <!-- VIDÉO YOUTUBE -->
-        <div class="seance-video-wrap">
-          ${ytId
-            ? `<div class="seance-iframe-wrap">
-                <iframe class="seance-video-iframe"
-                  src="https://www.youtube-nocookie.com/embed/${ytId}?controls=1&modestbranding=1&rel=0&mute=1&loop=1&playlist=${ytId}"
-                  title="${exo.nom}"
-                  frameborder="0"
-                  allow="autoplay; encrypted-media"
-                  allowfullscreen
-                  loading="lazy">
-                </iframe>
-                <div class="seance-video-badge">📹 ${exo.nom}</div>
-              </div>`
-            : `<div class="seance-exo-emoji-fallback">${exo.icon || '💪'}</div>`
-          }
-        </div>
-
-        <!-- Muscles ciblés (chips) -->
+        <!-- Muscles ciblés -->
         <div class="seance-muscles-row">
           ${(exo.muscles || []).map(m => `<span class="seance-muscle-chip">${m}</span>`).join('')}
         </div>
 
-        <!-- Instruction technique (collapsable) -->
-        <details class="seance-details-block" ${currentSet === 1 ? 'open' : ''}>
-          <summary class="seance-details-summary">📋 Technique · Tap pour ${currentSet === 1 ? 'réduire' : 'voir'}</summary>
-          <div class="seance-instruction-text">${instruction}</div>
-        </details>
-
-        <!-- MODE AUTO : timer circulaire -->
-        ${isAuto ? `
-        <div class="seance-auto-timer" id="auto-timer">
-          <div class="seance-timer-ring">
-            <svg class="seance-timer-svg" viewBox="0 0 100 100">
-              <circle class="seance-timer-track" cx="50" cy="50" r="42"/>
-              <circle class="seance-timer-fill" id="timer-fill" cx="50" cy="50" r="42"
-                stroke-dasharray="${2 * Math.PI * 42}"
-                stroke-dashoffset="0"/>
-            </svg>
-            <div class="seance-timer-center">
-              <div class="seance-timer-value" id="timer-val">—</div>
-              <div class="seance-timer-label">${isTimedRep ? 'sec' : 'reps'}</div>
-            </div>
+        <!-- VIDÉO : cachée par défaut, toggle manuel -->
+        ${ytId ? `
+        <div class="seance-video-toggle-wrap">
+          <button class="btn-video-toggle" id="btn-video-toggle" onclick="Seance.toggleVideo()">
+            📹 Voir la démo vidéo
+          </button>
+          <div class="seance-iframe-wrap" id="video-wrap" style="display:none">
+            <iframe class="seance-video-iframe"
+              src="https://www.youtube-nocookie.com/embed/${ytId}?controls=1&modestbranding=1&rel=0&mute=1"
+              title="${exo.nom}"
+              frameborder="0"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
           </div>
-        </div>` : `
-        <!-- MODE MANUEL : affichage grand reps -->
-        <div class="seance-manual-reps">
-          <div class="seance-reps-number">${exo.reps}</div>
-          <div class="seance-reps-unit">répétitions</div>
-        </div>`}
+        </div>` : ''}
+
+        <!-- Instruction technique — toujours visible -->
+        <div class="seance-instruction-card">
+          <div class="seance-instruction-label">📋 Technique</div>
+          <div class="seance-instruction-text">${instruction}</div>
+        </div>
+
+        <!-- Compteur reps / chrono -->
+        <div class="seance-reps-block">
+          <div class="seance-reps-ring">
+            ${isTimedRep ? `
+            <!-- Ring SVG avec chrono manuel -->
+            <div class="seance-timer-ring" id="timer-ring">
+              <svg class="seance-timer-svg" viewBox="0 0 100 100">
+                <circle class="seance-timer-track" cx="50" cy="50" r="42"/>
+                <circle class="seance-timer-fill" id="timer-fill" cx="50" cy="50" r="42"
+                  stroke-dasharray="${2 * Math.PI * 42}"
+                  stroke-dashoffset="0"/>
+              </svg>
+              <div class="seance-timer-center">
+                <div class="seance-timer-value" id="timer-val">${exo.reps}</div>
+                <div class="seance-timer-label">chrono</div>
+              </div>
+            </div>
+            <button class="btn-start-timer" id="btn-start-timer" onclick="Seance.startManualTimer()">
+              ▶ Lancer
+            </button>
+            ` : `
+            <!-- Reps manuelles — grand affichage -->
+            <div class="seance-manual-reps-ring">
+              <div class="seance-reps-number">${exo.reps}</div>
+              <div class="seance-reps-unit">${isTimedRep ? '' : 'reps'}</div>
+            </div>
+            `}
+          </div>
+        </div>
 
         <!-- Tracker de séries -->
         <div class="seance-sets-tracker">
@@ -414,7 +422,7 @@ const Seance = (() => {
 
       </div>
 
-      <!-- Contrôles bas de page -->
+      <!-- Contrôles bas -->
       <div class="seance-controls">
         <button class="btn-serie-done" id="btn-serie-done" onclick="Seance.completeSet()">
           ${isLastSet && isLastExo
@@ -428,20 +436,13 @@ const Seance = (() => {
           <button class="btn-seance-sec btn-seance-skip" onclick="Seance.skipExo()">Passer ⏭</button>
         </div>
       </div>
-    </div>`;
+    </div>
+    </div>\`;
 
-    // Lance le timer auto si nécessaire
-    if (isAuto && isTimedRep) {
-      startAutoTimer(parseTimedRep(exo.reps));
-    } else if (isAuto && !isTimedRep) {
-      // En mode auto sur reps normales : juste affichage
-      const timerEl = document.getElementById('timer-val');
-      if (timerEl) timerEl.textContent = exo.reps;
-    }
-
-    // Annonce vocale
+    // Annonce vocale uniquement (plus de timer auto)
     announceExercise(exo, _state.setIdx, totalSets);
   }
+
 
   /* ─────────────────────────────────────────
      8. TIMER AUTO
@@ -853,9 +854,41 @@ const Seance = (() => {
     try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {}
   }
 
+  /* ─── Toggle vidéo manuel ─── */
+  function toggleVideo() {
+    const wrap = document.getElementById('video-wrap');
+    const btn  = document.getElementById('btn-video-toggle');
+    if (!wrap) return;
+    const isHidden = wrap.style.display === 'none';
+    wrap.style.display = isHidden ? 'block' : 'none';
+    if (btn) btn.textContent = isHidden ? '📹 Cacher la vidéo' : '📹 Voir la démo vidéo';
+  }
+
+  /* ─── Lancer le chrono manuellement ─── */
+  function startManualTimer() {
+    const exo = _state?.exercises[_state.exoIdx];
+    if (!exo) return;
+    const btn = document.getElementById('btn-start-timer');
+    if (btn) { btn.textContent = '⏹ Stopper'; btn.onclick = () => stopManualTimer(); }
+    startAutoTimer(parseTimedRep(exo.reps));
+  }
+
+  function stopManualTimer() {
+    clearTimer();
+    const btn = document.getElementById('btn-start-timer');
+    if (btn) {
+      const exo = _state?.exercises[_state.exoIdx];
+      btn.textContent = '▶ Relancer';
+      btn.onclick = () => startManualTimer();
+      const val = document.getElementById('timer-val');
+      if (val && exo) val.textContent = exo.reps;
+    }
+  }
+
   return {
     init, start, close,
     setMode, toggleVoice,
+    toggleVideo, startManualTimer,
     completeSet, clickSet,
     nextExo, prevExo, skipExo,
     skipRepos,
