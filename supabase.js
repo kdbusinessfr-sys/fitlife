@@ -234,6 +234,8 @@ const DB = {
         referral_code:     referralCode,
         referral_count:    0,
         referral_months:   0,
+        gender:            null,
+        birth_year:        null,
       });
     } catch(e) {
       console.warn('[DB] createProfile:', e.message);
@@ -270,6 +272,12 @@ const DB = {
       if (p.healthConditions && p.healthConditions.size > 0) {
         body.health_conditions = JSON.stringify([...p.healthConditions]);
       }
+      // Informations personnelles
+      if (STATE.user?.gender)    body.gender     = STATE.user.gender;
+      if (STATE.user?.birthYear) body.birth_year = STATE.user.birthYear;
+      if (STATE.user?.firstName) body.first_name = STATE.user.firstName;
+      if (STATE.user?.lastName)  body.last_name  = STATE.user.lastName;
+
       return await SB.patch('profiles', `?id=eq.${userId}`, body);
     } catch(e) {
       console.warn('[DB] saveProfile:', e.message);
@@ -337,5 +345,7 @@ const DB = {
       STATE.user.initials = ((row.first_name||'')[0]||('')).toUpperCase() +
                             ((row.last_name||'')[0]||('')).toUpperCase() || '?';
     }
+    if (row.gender)     STATE.user.gender    = row.gender;
+    if (row.birth_year) STATE.user.birthYear = row.birth_year;
   },
 };
