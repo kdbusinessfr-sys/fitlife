@@ -1196,3 +1196,112 @@
   .seance-iframe-wrap { aspect-ratio: 16 / 9; max-height: 360px; }
   .seance-active      { max-width: 600px; margin: 0 auto; }
 }
+
+/* ══════════════════════════════════════════════════════
+   NOUVEAUX ÉLÉMENTS — video toggle + instruction card + timer manuel
+══════════════════════════════════════════════════════ */
+
+/* Bouton toggle vidéo */
+.seance-video-toggle-wrap {
+  padding: 0 20px 8px;
+}
+.btn-video-toggle {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  color: var(--text2);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-video-toggle:active { background: var(--border); }
+
+/* Instruction toujours visible */
+.seance-instruction-card {
+  margin: 0 20px 12px;
+  background: var(--surface2);
+  border-radius: var(--r-md);
+  border-left: 3px solid var(--orange);
+  padding: 12px 14px;
+}
+.seance-instruction-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.seance-instruction-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.55;
+}
+
+/* Bloc reps / chrono centré */
+.seance-reps-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 20px 4px;
+}
+.seance-reps-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Reps manuelles — grand anneau orange */
+.seance-manual-reps-ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 8px solid var(--orange);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px var(--orange-muted), 0 8px 24px rgba(255,107,0,0.28);
+  background: var(--surface);
+}
+.seance-reps-number {
+  font-family: 'Sora', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.seance-reps-unit {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Bouton lancer chrono */
+.btn-start-timer {
+  padding: 11px 32px;
+  border-radius: var(--r-full);
+  background: var(--orange);
+  border: none;
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255,107,0,0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-start-timer:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(255,107,0,0.2);
+}
