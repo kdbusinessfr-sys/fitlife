@@ -1,0 +1,418 @@
+/* ═══════════════════════════════════════════════════════
+   FITLIFE IA — WELLBEING CSS 🌟
+═══════════════════════════════════════════════════════ */
+
+/* ── Écran conteneur ── */
+#screen-wellbeing {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.wb-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ── Header ── */
+.wb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px 14px;
+  background: var(--bg);
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+.wb-header-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.wb-header-sub {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+/* Bouton refresh */
+.wb-refresh-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  color: var(--text2);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.wb-refresh-btn:active { background: var(--border); }
+@keyframes wbSpin { to { transform: rotate(360deg); } }
+
+/* ── Body scrollable ── */
+.wb-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0;
+}
+.wb-body::-webkit-scrollbar { display: none; }
+
+/* ── Label de section ── */
+.wb-section-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 20px 20px 8px;
+}
+
+/* ══════════════════════════════════════════════════════
+   BANNER D'ENCOURAGEMENT
+══════════════════════════════════════════════════════ */
+.wb-encourage-banner {
+  margin: 16px 20px 0;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  border-radius: var(--r-xl);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-accent);
+}
+.wb-encourage-emoji {
+  font-size: 36px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+}
+.wb-encourage-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.5;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* ══════════════════════════════════════════════════════
+   CARDS GÉNÉRIQUES
+══════════════════════════════════════════════════════ */
+.wb-card {
+  margin: 0 20px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  position: relative;
+}
+
+/* Accent coloré à gauche */
+.wb-card-accent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--orange);
+  border-radius: var(--r-full) 0 0 var(--r-full);
+}
+
+.wb-card-inner {
+  padding: 16px 16px 16px 20px;
+}
+.wb-card-icon-row {
+  font-size: 28px;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.wb-card-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.wb-card-text {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* Badge IA sur la card conseil */
+.wb-ia-badge {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--orange);
+  background: var(--orange-muted);
+  padding: 3px 9px;
+  border-radius: var(--r-full);
+}
+
+/* Couleurs spécifiques par card */
+.wb-card-conseil  .wb-card-accent { background: var(--orange); }
+.wb-card-mental   .wb-card-accent { background: var(--blue);   }
+.wb-card-mental   { border-left: 4px solid var(--blue); }
+.wb-card-nutrition .wb-card-accent { background: var(--green); }
+.wb-card-nutrition { border-left: 4px solid var(--green); }
+
+/* ══════════════════════════════════════════════════════
+   VIDÉOS
+══════════════════════════════════════════════════════ */
+.wb-videos-row {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.wb-videos-row::-webkit-scrollbar { display: none; }
+
+.wb-video-card {
+  flex-shrink: 0;
+  width: 220px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.wb-video-card:active {
+  transform: scale(0.97);
+  box-shadow: var(--shadow-accent);
+}
+
+.wb-video-thumb {
+  height: 122px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.wb-video-play {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,107,0,0.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 3px;
+  box-shadow: 0 4px 16px rgba(255,107,0,0.4);
+  transition: transform 0.15s ease;
+}
+.wb-video-card:active .wb-video-play { transform: scale(0.9); }
+
+.wb-video-info {
+  padding: 10px 12px 12px;
+}
+.wb-video-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+.wb-video-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════════════
+   ARTICLE BIEN-ÊTRE
+══════════════════════════════════════════════════════ */
+.wb-article-card {
+  margin: 0 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.wb-article-card::before {
+  content: '📖';
+  position: absolute;
+  top: -8px; right: 14px;
+  font-size: 42px;
+  opacity: 0.08;
+}
+.wb-article-chapeau {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+}
+.wb-article-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.wb-article-body {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.wb-article-toggle {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ══════════════════════════════════════════════════════
+   SKELETON CHARGEMENT
+══════════════════════════════════════════════════════ */
+.wb-ai-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 20px 20px;
+  gap: 10px;
+}
+.wb-ai-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--orange-muted);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: wbSpin 0.9s linear infinite;
+}
+.wb-ai-loading-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+.wb-ai-loading-sub {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.wb-skeleton-card {
+  margin: 12px 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px;
+}
+.wb-skeleton-line {
+  border-radius: var(--r-full);
+  background: linear-gradient(90deg, var(--border) 25%, var(--surface2) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: wbShimmer 1.4s ease infinite;
+  height: 14px;
+  margin-bottom: 10px;
+}
+.wb-sk-title  { width: 65%; height: 16px; }
+.wb-sk-body   { width: 100%; }
+.wb-sk-short  { width: 75%; margin-bottom: 0; }
+@keyframes wbShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ══════════════════════════════════════════════════════
+   ERREUR & RETRY
+══════════════════════════════════════════════════════ */
+.wb-error-card {
+  margin: 20px 20px 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 20px;
+  text-align: center;
+}
+.wb-error-icon { font-size: 40px; margin-bottom: 10px; }
+.wb-error-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.wb-error-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+.wb-retry-btn {
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-full);
+  padding: 12px 28px;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-accent);
+}
+
+/* ── Footer ── */
+.wb-footer {
+  margin: 24px 20px 0;
+  text-align: center;
+}
+.wb-footer-text {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.wb-footer-refresh {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-full);
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.15s, color 0.15s;
+}
+.wb-footer-refresh:active { border-color: var(--orange); color: var(--orange); }
