@@ -13,7 +13,7 @@ const SCREENS = {
   forgot:   { id: 'screen-forgot',   nav: false, onEnter: null },
   home:      { id: 'screen-home',      nav: true,  tab: 'home',      onEnter: () => Render.home() },
   programme: { id: 'screen-programme', nav: true,  tab: 'programme', onEnter: () => { Prog.init(); Prog.render(); } },
-  profile:   { id: 'screen-profile',   nav: true,  tab: 'profile',   onEnter: () => {} },
+  profile:   { id: 'screen-profile',   nav: true,  tab: 'profile',   onEnter: () => { Profile.init(); Profile.render(); } },
   seance:    { id: 'screen-seance',     nav: false, onEnter: null },
   results:   { id: 'screen-results',   nav: false, onEnter: null },
 };
