@@ -81,7 +81,7 @@ function seededRandom(seed) {
 }
 
 function getTodayChallenges(userId = '', count = 5) {
-  const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
+  const today = new Date().toLocaleDateString('fr-CA').replace(/-/g, '');
   const seed  = parseInt(today) + userId.charCodeAt(0) || 0;
 
   // Sélection déterministe
@@ -218,9 +218,11 @@ const Render = {
         </div>
 
            <!-- Galerie séances bonus -->
-        <div class="home-section">
-          <div class="home-section-title">🎯 Séances bonus</div>
-          <button class="home-section-action" onclick="showToast('Fais une séance bonus pour gagner des points extra !','default')">?</button>
+        <div class="home-bonus-header">
+          <div>
+            <div class="home-bonus-title">Séances bonus</div>
+            <div class="home-bonus-sub">Entraîne-toi hors programme · Points extra 🔥</div>
+          </div>
         </div>
         <div class="home-bonus-scroll">
           ${_buildBonusPrograms()}
@@ -476,98 +478,97 @@ function _launchOrProgram() {
 const BONUS_PROGRAMS = [
   {
     id: 'bonus_hiit',
-    icon: '🔥',
     name: 'HIIT Express',
-    sub: '20 min · Brûle-graisses',
+    tag: '⚡ Brûle-graisses',
+    sub: '20 min',
     pts: 120,
-    color: 'linear-gradient(135deg,#FF6B00,#E53E00)',
+    photo: 'https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=600&q=80&auto=format&fit=crop',
     goal: 'poids',
     exercises: [
-      { nom:'Burpees',         sets:3, reps:'10', repos:45,  muscles:['Corps entier'], icon:'🏃' },
-      { nom:'Mountain climbers', sets:3, reps:'20', repos:30, muscles:['Abdos','Épaules'], icon:'🧗' },
-      { nom:'Jump squats',     sets:3, reps:'12', repos:45,  muscles:['Jambes','Fessiers'], icon:'🦵' },
-      { nom:'High knees',      sets:3, reps:'30s',repos:30,  muscles:['Cardio','Jambes'], icon:'🏃' },
+      { nom:'Burpees',           sets:3, reps:'10',  repos:45, muscles:['Corps entier'], icon:'🏃' },
+      { nom:'Mountain climbers', sets:3, reps:'20',  repos:30, muscles:['Abdos','Épaules'], icon:'🧗' },
+      { nom:'Jump squats',       sets:3, reps:'12',  repos:45, muscles:['Jambes','Fessiers'], icon:'🦵' },
+      { nom:'High knees',        sets:3, reps:'30s', repos:30, muscles:['Cardio','Jambes'], icon:'🏃' },
     ],
   },
   {
     id: 'bonus_upper',
-    icon: '💪',
     name: 'Upper Body',
-    sub: '25 min · Haut du corps',
+    tag: '💪 Haut du corps',
+    sub: '25 min',
     pts: 100,
-    color: 'linear-gradient(135deg,#7C3AED,#5B21B6)',
+    photo: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80&auto=format&fit=crop',
     goal: 'muscle',
     exercises: [
-      { nom:'Pompes',           sets:4, reps:'12', repos:60, muscles:['Pectoraux','Triceps'], icon:'💪' },
-      { nom:'Dips chaise',      sets:3, reps:'12', repos:60, muscles:['Triceps'], icon:'🪑' },
-      { nom:'Pike push-ups',    sets:3, reps:'10', repos:60, muscles:['Épaules'], icon:'🔱' },
-      { nom:'Planche',          sets:3, reps:'40s',repos:45, muscles:['Abdos','Gainage'], icon:'🧘' },
+      { nom:'Pompes',        sets:4, reps:'12',  repos:60, muscles:['Pectoraux','Triceps'], icon:'💪' },
+      { nom:'Dips chaise',   sets:3, reps:'12',  repos:60, muscles:['Triceps'], icon:'🪑' },
+      { nom:'Pike push-ups', sets:3, reps:'10',  repos:60, muscles:['Épaules'], icon:'🔱' },
+      { nom:'Planche',       sets:3, reps:'40s', repos:45, muscles:['Abdos','Gainage'], icon:'🧘' },
     ],
   },
   {
     id: 'bonus_lower',
-    icon: '🦵',
     name: 'Jambes Power',
-    sub: '25 min · Jambes & Fessiers',
+    tag: '🦵 Jambes & Fessiers',
+    sub: '25 min',
     pts: 100,
-    color: 'linear-gradient(135deg,#16A34A,#15803D)',
+    photo: 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=600&q=80&auto=format&fit=crop',
     goal: 'muscle',
     exercises: [
-      { nom:'Squats',           sets:4, reps:'15', repos:60, muscles:['Quadriceps','Fessiers'], icon:'🏋️' },
-      { nom:'Fentes alternées', sets:3, reps:'12', repos:60, muscles:['Jambes'], icon:'🦵' },
-      { nom:'Hip thrust',       sets:3, reps:'15', repos:60, muscles:['Fessiers'], icon:'🍑' },
-      { nom:'Mollets debout',   sets:3, reps:'20', repos:45, muscles:['Mollets'], icon:'💪' },
+      { nom:'Squats',            sets:4, reps:'15', repos:60, muscles:['Quadriceps','Fessiers'], icon:'🏋️' },
+      { nom:'Fentes alternées',  sets:3, reps:'12', repos:60, muscles:['Jambes'], icon:'🦵' },
+      { nom:'Hip thrust',        sets:3, reps:'15', repos:60, muscles:['Fessiers'], icon:'🍑' },
+      { nom:'Mollets debout',    sets:3, reps:'20', repos:45, muscles:['Mollets'], icon:'💪' },
     ],
   },
   {
     id: 'bonus_cardio',
-    icon: '❤️',
     name: 'Cardio Zone',
-    sub: '30 min · Endurance',
+    tag: '❤️ Endurance',
+    sub: '30 min',
     pts: 90,
-    color: 'linear-gradient(135deg,#EF4444,#B91C1C)',
+    photo: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&auto=format&fit=crop',
     goal: 'cardio',
     exercises: [
-      { nom:'Corde à sauter',   sets:4, reps:'2 min',repos:60, muscles:['Corps entier'], icon:'🪢' },
-      { nom:'Box step',         sets:3, reps:'1 min',repos:45, muscles:['Jambes','Cardio'], icon:'📦' },
-      { nom:'Shadow boxing',    sets:3, reps:'2 min',repos:60, muscles:['Épaules','Cardio'], icon:'🥊' },
-      { nom:'Jumping jacks',    sets:3, reps:'40s', repos:30, muscles:['Corps entier'], icon:'⭐' },
+      { nom:'Corde à sauter', sets:4, reps:'2 min', repos:60, muscles:['Corps entier'], icon:'🪢' },
+      { nom:'Box step',       sets:3, reps:'1 min', repos:45, muscles:['Jambes','Cardio'], icon:'📦' },
+      { nom:'Shadow boxing',  sets:3, reps:'2 min', repos:60, muscles:['Épaules','Cardio'], icon:'🥊' },
+      { nom:'Jumping jacks',  sets:3, reps:'40s',   repos:30, muscles:['Corps entier'], icon:'⭐' },
     ],
   },
   {
     id: 'bonus_core',
-    icon: '🎯',
     name: 'Core & Abdos',
-    sub: '20 min · Gainage',
+    tag: '🎯 Gainage',
+    sub: '20 min',
     pts: 85,
-    color: 'linear-gradient(135deg,#2563EB,#1D4ED8)',
+    photo: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80&auto=format&fit=crop',
     goal: 'mobilite',
     exercises: [
-      { nom:'Planche avant',    sets:4, reps:'45s', repos:30, muscles:['Abdos','Gainage'], icon:'🧘' },
-      { nom:'Crunchs',          sets:3, reps:'20',  repos:30, muscles:['Abdos'], icon:'💪' },
-      { nom:'Relevés de jambes',sets:3, reps:'15',  repos:45, muscles:['Abdos bas'], icon:'🦵' },
-      { nom:'Russian twist',    sets:3, reps:'20',  repos:30, muscles:['Obliques'], icon:'🔄' },
+      { nom:'Planche avant',     sets:4, reps:'45s', repos:30, muscles:['Abdos','Gainage'], icon:'🧘' },
+      { nom:'Crunchs',           sets:3, reps:'20',  repos:30, muscles:['Abdos'], icon:'💪' },
+      { nom:'Relevés de jambes', sets:3, reps:'15',  repos:45, muscles:['Abdos bas'], icon:'🦵' },
+      { nom:'Russian twist',     sets:3, reps:'20',  repos:30, muscles:['Obliques'], icon:'🔄' },
     ],
   },
   {
     id: 'bonus_mobility',
-    icon: '🧘',
     name: 'Mobilité & Yoga',
-    sub: '20 min · Récupération',
+    tag: '🧘 Récupération',
+    sub: '20 min',
     pts: 70,
-    color: 'linear-gradient(135deg,#D97706,#B45309)',
+    photo: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80&auto=format&fit=crop',
     goal: 'mobilite',
     exercises: [
-      { nom:'Salutation soleil', sets:3, reps:'5',  repos:30, muscles:['Corps entier'], icon:'☀️' },
-      { nom:'Pigeon pose',       sets:2, reps:'60s',repos:30, muscles:['Hanches'], icon:'🕊️' },
-      { nom:'Cat-cow',           sets:3, reps:'10', repos:20, muscles:['Dos','Core'], icon:'🐱' },
-      { nom:'World greatest stretch', sets:2, reps:'8', repos:30, muscles:['Corps entier'], icon:'🌍' },
+      { nom:'Salutation soleil',       sets:3, reps:'5',   repos:30, muscles:['Corps entier'], icon:'☀️' },
+      { nom:'Pigeon pose',             sets:2, reps:'60s', repos:30, muscles:['Hanches'], icon:'🕊️' },
+      { nom:'Cat-cow',                 sets:3, reps:'10',  repos:20, muscles:['Dos','Core'], icon:'🐱' },
+      { nom:'World greatest stretch',  sets:2, reps:'8',   repos:30, muscles:['Corps entier'], icon:'🌍' },
     ],
   },
-];
+]
 
 function _buildBonusPrograms() {
-  // Trier par affinité avec l'objectif du user
   const userGoal = STATE.profile.goal;
   const sorted = [...BONUS_PROGRAMS].sort((a, b) => {
     if (a.goal === userGoal && b.goal !== userGoal) return -1;
@@ -577,14 +578,14 @@ function _buildBonusPrograms() {
 
   return sorted.map(p => `
     <div class="bonus-card" onclick="_launchBonus('${p.id}')">
-      <div class="bonus-card-bg" style="background:${p.color}">
-        <div class="bonus-card-icon">${p.icon}</div>
+      <div class="bonus-card-photo" style="background-image:url('${p.photo}')">
+        <div class="bonus-card-overlay"></div>
         <div class="bonus-pts-pill">+${p.pts} pts</div>
-      </div>
-      <div class="bonus-card-body">
-        <div class="bonus-card-name">${p.name}</div>
-        <div class="bonus-card-sub">${p.sub}</div>
-        <div class="bonus-card-exos">${p.exercises.length} exercices</div>
+        <div class="bonus-card-info">
+          <div class="bonus-card-tag">${p.tag}</div>
+          <div class="bonus-card-name">${p.name}</div>
+          <div class="bonus-card-meta">${p.sub} · ${p.exercises.length} exercices</div>
+        </div>
       </div>
     </div>
   `).join('');
