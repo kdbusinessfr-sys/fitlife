@@ -73,7 +73,9 @@ const Prog = (() => {
     container.innerHTML = `
     <div class="quiz-shell">
       <div class="quiz-header">
-        ${_stepIdx > 0 ? `<button class="quiz-back" onclick="Prog.prevStep()">←</button>` : `<div></div>`}
+        ${_stepIdx > 0
+          ? `<button class="quiz-back" onclick="Prog.prevStep()">←</button>`
+          : `<button class="quiz-cancel-btn" onclick="Prog.cancelQuestionnaire()">✕</button>`}
         <div class="quiz-step-label">Étape ${_stepIdx+1} / ${STEPS.length}</div>
         <div></div>
       </div>
@@ -493,6 +495,32 @@ const Prog = (() => {
     try{const r=localStorage.getItem('fitlife_program'); if(r) STATE.currentProgram=JSON.parse(r); const rP=localStorage.getItem('fitlife_profile'); if(rP){const p=JSON.parse(rP); STATE.profile={...STATE.profile,...p,healthConditions:new Set(p.healthConditions||[])};}}catch(e){}
   }
 
-  return { init, render, startQuestionnaire, nextStep, prevStep, selectDraft, selectAndNext, toggleHealth, toggleEquip, generateProgram, modifyProgram, toggleDay, launchWorkout };
+  /* ─── Annuler le questionnaire ─── */
+  function cancelQuestionnaire() {
+    _stepIdx = 0;
+    if (STATE.currentProgram) {
+      // Programme existant : revenir à l'affichage du programme
+      _phase = 'program';
+      renderProgram(document.getElementById('prog-content'));
+    } else {
+      // Pas de programme : revenir à la page d'accueil
+      navigate('home');
+      setTimeout(() => Render.home(), 50);
+    }
+  }
+
+  /* ─── Annuler le questionnaire → retour ─── */
+  function cancelQuestionnaire() {
+    _stepIdx = 0;
+    if (STATE.currentProgram) {
+      _phase = 'program';
+      renderProgram(document.getElementById('prog-content'));
+    } else {
+      navigate('home');
+      setTimeout(() => Render.home(), 50);
+    }
+  }
+
+  return { init, render, startQuestionnaire, nextStep, prevStep, selectDraft, selectAndNext, toggleHealth, toggleEquip, generateProgram, modifyProgram, cancelQuestionnaire, toggleDay, launchWorkout };
 
 })();
