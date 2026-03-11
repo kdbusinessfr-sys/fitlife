@@ -724,9 +724,42 @@ const Seance = (() => {
     STATE.completedDays.add(`w${week}_d${dayIdx}`);
 
     // Sauvegarde
+    // Sauvegarder completedDays localement
+    try {
+      if (STATE.completedDays) {
+        localStorage.setItem('fitlife_completedDays', JSON.stringify([...STATE.completedDays]));
+      }
+    } catch(e) {}
+
+    // Sauvegarder l'historique local des séances (pour page Profil)
+    try {
+      const histKey  = 'fitlife-workout-history';
+      const existing = JSON.parse(localStorage.getItem(histKey) || '[]');
+      existing.unshift({
+        name:        _state.plan.label || 'Séance',
+        date:        new Date().toISOString(),
+        duration_min: min,
+        calories:    kcal,
+        xp_earned:   xp,
+        sets:        _state.totalSetsCompleted,
+      });
+      // Garder les 50 dernières
+      localStorage.setItem(histKey, JSON.stringify(existing.slice(0, 50)));
+    } catch(e) {}
+
+    // Sauvegarder en DB
     if (STATE.user?.id) {
-      DB.upsert('profiles', { id: STATE.user.id, total_sessions: STATE.totalSessions, total_points: STATE.points, sessions_this_week: STATE.sessionsThisWeek }).catch(()=>{});
-      DB.insert('workout_sessions', { user_id: STATE.user.id, duration_min: durationMin, exercises_count: _state.exoIdx, sets_completed: _state.totalSetsCompleted, calories: kcal, xp_earned: xpTotal, workout_name: _state.plan.label || 'Séance', created_at: new Date().toISOString() }).catch(()=>{});
+      DB.saveProfile(STATE.user.id).catch(() => {});
+      DB.insert('workout_sessions', {
+        user_id:        STATE.user.id,
+        duration_min:   durationMin,
+        exercises_done: _state.exoIdx,
+        sets_completed: _state.totalSetsCompleted,
+        calories:       kcal,
+        xp_earned:      xpTotal,
+        workout_name:   _state.plan.label || 'Séance',
+        created_at:     new Date().toISOString(),
+      }).catch(() => {});
     }
 
     // Voix fin de séance
@@ -798,9 +831,15 @@ const Seance = (() => {
     clearTimer(); stopVoice();
     document.getElementById('repos-overlay')?.remove();
     document.getElementById('pause-modal')?.remove();
+    const wasBonus = _state?.plan?.isBonus || false;
     _state = null;
-    navigate('programme');
-    setTimeout(() => { if (typeof Prog !== 'undefined') { Prog.init(); Prog.render(); } }, 100);
+    if (wasBonus) {
+      navigate('home');
+      setTimeout(() => Render.home(), 50);
+    } else {
+      navigate('programme');
+      setTimeout(() => { if (typeof Prog !== 'undefined') { Prog.init(); Prog.render(); } }, 100);
+    }
   }
 
   /* ─────────────────────────────────────────
