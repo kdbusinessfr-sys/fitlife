@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#FF6B00">
+  <title>FitLife IA</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="programme.css">
+  <link rel="stylesheet" href="seance.css">
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ════════════════════════════════════════
+       SPLASH
+  ════════════════════════════════════════ -->
+  <div class="screen" id="screen-splash">
+    <div class="splash-bg">
+      <div class="splash-circle-1"></div>
+      <div class="splash-circle-2"></div>
+      <div class="splash-circle-3"></div>
+    </div>
+
+    <div class="splash-content">
+      <div class="splash-mascot">🦁</div>
+      <div class="splash-logo-wrap">
+        <div class="splash-app-name">FitLife IA</div>
+      </div>
+      <div class="splash-tagline">Ton coach fitness intelligent</div>
+    </div>
+
+    <div class="splash-loader">
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       LOGIN
+  ════════════════════════════════════════ -->
+  <div class="screen auth-screen" id="screen-login">
+
+    <!-- Header orange -->
+    <div class="auth-header">
+      <div class="auth-header-bg-circle"></div>
+      <span class="auth-header-mascot anim-pop-in">🦁</span>
+      <div class="auth-header-title anim-fade-up delay-1">Bon retour !</div>
+      <div class="auth-header-sub anim-fade-up delay-2">Connecte-toi pour continuer</div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="auth-body">
+
+      <!-- Email -->
+      <div class="input-group anim-fade-up delay-1">
+        <label class="input-label">Adresse email</label>
+        <div class="input-wrap">
+          <span class="input-icon">✉️</span>
+          <input
+            class="input"
+            id="login-email"
+            type="email"
+            placeholder="ton@email.com"
+            autocomplete="email"
+            inputmode="email"
+            onkeydown="if(event.key==='Enter') document.getElementById('login-password').focus()"
+          >
+        </div>
+        <div class="input-error" id="login-email-error"></div>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="input-group anim-fade-up delay-2">
+        <label class="input-label">Mot de passe</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input
+            class="input"
+            id="login-password"
+            type="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            onkeydown="if(event.key==='Enter') submitLogin()"
+          >
+          <button class="input-eye" id="login-eye" onclick="togglePassword('login-password','login-eye')">👁️</button>
+        </div>
+        <div class="input-error" id="login-password-error"></div>
+      </div>
+
+      <!-- Se souvenir + Mot de passe oublié -->
+      <div class="flex items-center justify-between anim-fade-up delay-3">
+        <div class="remember-row" onclick="toggleRemember()">
+          <div class="remember-box checked" id="login-remember">✓</div>
+          <div class="remember-label">Se souvenir de moi</div>
+        </div>
+        <button class="forgot-link" onclick="navigate('forgot')">Mot de passe oublié ?</button>
+      </div>
+
+      <!-- CTA -->
+      <button
+        class="btn btn-primary anim-fade-up delay-4"
+        id="login-submit"
+        onclick="submitLogin()"
+      >
+        Se connecter
+      </button>
+
+      <!-- Divider -->
+      <div class="divider-text anim-fade-up delay-4">ou</div>
+
+      <!-- Switch signup -->
+      <div class="auth-switch anim-fade-up delay-5">
+        Pas encore de compte ?
+        <button class="auth-switch-link" onclick="navigate('signup')">Créer un compte</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SIGNUP
+  ════════════════════════════════════════ -->
+  <div class="screen auth-screen" id="screen-signup">
+
+    <!-- Header orange -->
+    <div class="auth-header">
+      <div class="auth-header-bg-circle"></div>
+      <button class="back-btn" onclick="navigate('login')">Retour</button>
+      <div class="auth-header-title">Créer mon compte</div>
+      <div class="auth-header-sub">Rejoins la communauté FitLife IA 🦁</div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="auth-body">
+
+      <!-- Prénom + Nom sur 2 colonnes -->
+      <div class="flex gap-12 anim-fade-up delay-1">
+        <div class="input-group flex-1">
+          <label class="input-label">Prénom</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input
+              class="input"
+              id="signup-firstname"
+              type="text"
+              placeholder="Prénom"
+              autocomplete="given-name"
+              autocapitalize="words"
+            >
+          </div>
+          <div class="input-error" id="signup-firstname-error"></div>
+        </div>
+        <div class="input-group flex-1">
+          <label class="input-label">Nom</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input
+              class="input"
+              id="signup-lastname"
+              type="text"
+              placeholder="Nom"
+              autocomplete="family-name"
+              autocapitalize="words"
+            >
+          </div>
+          <div class="input-error" id="signup-lastname-error"></div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="input-group anim-fade-up delay-2">
+        <label class="input-label">Adresse email</label>
+        <div class="input-wrap">
+          <span class="input-icon">✉️</span>
+          <input
+            class="input"
+            id="signup-email"
+            type="email"
+            placeholder="ton@email.com"
+            autocomplete="email"
+            inputmode="email"
+          >
+        </div>
+        <div class="input-error" id="signup-email-error"></div>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="input-group anim-fade-up delay-3">
+        <label class="input-label">Mot de passe</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input
+            class="input"
+            id="signup-password"
+            type="password"
+            placeholder="Minimum 6 caractères"
+            autocomplete="new-password"
+            oninput="renderPasswordStrength('pwd-strength','pwd-label',this.value)"
+          >
+          <button class="input-eye" id="signup-eye" onclick="togglePassword('signup-password','signup-eye')">👁️</button>
+        </div>
+        <div class="input-error" id="signup-password-error"></div>
+        <!-- Indicateur force -->
+        <div class="pwd-strength" id="pwd-strength">
+          <div class="pwd-bar"></div>
+          <div class="pwd-bar"></div>
+          <div class="pwd-bar"></div>
+          <div class="pwd-bar"></div>
+        </div>
+        <div class="pwd-label" id="pwd-label"></div>
+      </div>
+
+      <!-- CGU -->
+      <div class="terms-text anim-fade-up delay-4">
+        En créant un compte tu acceptes nos
+        <span class="terms-link">Conditions d'utilisation</span>
+        et notre
+        <span class="terms-link">Politique de confidentialité</span>.
+      </div>
+
+      <!-- CTA -->
+      <button
+        class="btn btn-primary anim-fade-up delay-5"
+        id="signup-submit"
+        onclick="submitSignup()"
+      >
+        Créer mon compte
+      </button>
+
+      <!-- Switch login -->
+      <div class="auth-switch anim-fade-up delay-5">
+        Déjà un compte ?
+        <button class="auth-switch-link" onclick="navigate('login')">Se connecter</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MOT DE PASSE OUBLIÉ
+  ════════════════════════════════════════ -->
+  <div class="screen auth-screen" id="screen-forgot">
+
+    <div class="auth-header">
+      <div class="auth-header-bg-circle"></div>
+      <button class="back-btn" onclick="navigate('login')">Retour</button>
+      <div class="auth-header-title">Mot de passe oublié</div>
+      <div class="auth-header-sub">On t'envoie un lien de réinitialisation</div>
+    </div>
+
+    <div class="auth-body">
+
+      <!-- Formulaire -->
+      <div id="forgot-form">
+        <div class="input-group anim-fade-up delay-1">
+          <label class="input-label">Ton adresse email</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉️</span>
+            <input
+              class="input"
+              id="forgot-email"
+              type="email"
+              placeholder="ton@email.com"
+              inputmode="email"
+              autocomplete="email"
+              onkeydown="if(event.key==='Enter') submitForgotPassword()"
+            >
+          </div>
+          <div class="input-error" id="forgot-email-error"></div>
+        </div>
+
+        <div class="mt-16">
+          <button
+            class="btn btn-primary anim-fade-up delay-2"
+            id="forgot-submit"
+            onclick="submitForgotPassword()"
+          >
+            Envoyer le lien
+          </button>
+        </div>
+      </div>
+
+      <!-- Succès -->
+      <div id="forgot-success" style="display:none">
+        <div class="email-sent-illustration">
+          <span class="email-sent-icon">📩</span>
+          <div class="email-sent-title">Email envoyé !</div>
+          <div class="email-sent-sub">
+            Vérifie ta boîte mail et clique sur le lien pour réinitialiser ton mot de passe.
+            Pense à vérifier tes spams.
+          </div>
+        </div>
+        <button class="btn btn-ghost mt-20" onclick="navigate('login')">
+          Retour à la connexion
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       HOME / PROGRAMME / PROFIL
+       (à venir — étapes suivantes)
+  ════════════════════════════════════════ -->
+  <div class="screen" id="screen-home"></div>
+
+  <div class="screen" id="screen-programme">
+    <div class="screen-body">
+      <div id="prog-content">
+        <!-- Rendu dynamique par Prog.render() -->
+      </div>
+      <div class="nav-spacer"></div>
+    </div>
+  </div>
+
+  <!-- ÉCRAN SÉANCE FULLSCREEN -->
+  <div class="screen" id="screen-seance">
+    <div id="seance-content"></div>
+  </div>
+
+  <div class="screen" id="screen-profile"></div>
+
+  <!-- ════════════════════════════════════════
+       NAV BAR (cachée sur auth)
+  ════════════════════════════════════════ -->
+  <nav class="bottom-nav" id="bottom-nav" style="display:none">
+    <button class="nav-item active" data-tab="home" onclick="navigate('home')">
+      <div class="nav-item-icon-wrap">
+        <div class="nav-item-icon">🏠</div>
+      </div>
+      <div class="nav-item-label">Accueil</div>
+    </button>
+    <button class="nav-item" data-tab="programme" onclick="navigate('programme')">
+      <div class="nav-item-icon-wrap">
+        <div class="nav-item-icon">🏋️</div>
+        <div class="nav-badge orange" id="nav-badge-programme" style="display:none">!</div>
+      </div>
+      <div class="nav-item-label">Programme</div>
+    </button>
+    <button class="nav-item" data-tab="profile" onclick="navigate('profile')">
+      <div class="nav-item-icon-wrap">
+        <div class="nav-item-icon">👤</div>
+      </div>
+      <div class="nav-item-label">Profil</div>
+    </button>
+  </nav>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+</div><!-- #app -->
+
+<script src="state.js"></script>
+<script src="router.js"></script>
+<script src="ui.js"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="home.js"></script>
+<script src="ai.js"></script>
+<script src="programme.js"></script>
+<script src="seance.js"></script>
+<script src="profile.js"></script>
+
+<script>
+  // Démarrage
+  document.addEventListener('DOMContentLoaded', initApp);
+</script>
+
+</body>
+</html>
