@@ -6,7 +6,7 @@
 ═══════════════════════════════════════════════════════ */
 
 /** Toutes les configurations d'écrans */
-const SCREENS = {
+var SCREENS = {
   splash:    { id: 'screen-splash',    nav: false, onEnter: null },
   login:     { id: 'screen-login',     nav: false, onEnter: null },
   signup:    { id: 'screen-signup',    nav: false, onEnter: null },
