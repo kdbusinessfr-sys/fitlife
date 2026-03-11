@@ -96,7 +96,7 @@ async function _enterApp() {
 function _updateStreak(uid) {
   try {
     const key      = 'fitlife-lastActive-' + uid;
-    const today    = new Date().toISOString().split('T')[0];
+    const today    = new Date().toLocaleDateString('fr-CA');
     const lastDate = localStorage.getItem(key);
 
     if (!lastDate) {
@@ -131,7 +131,7 @@ function _checkWeekReset(uid) {
     const today    = new Date();
     const monday   = new Date(today);
     monday.setDate(today.getDate() - ((today.getDay() + 6) % 7)); // lundi
-    const mondayStr = monday.toISOString().split('T')[0];
+    const mondayStr = monday.toLocaleDateString('fr-CA');
     const lastMonday = localStorage.getItem(key);
 
     if (lastMonday !== mondayStr) {
