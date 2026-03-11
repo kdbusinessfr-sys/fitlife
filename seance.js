@@ -731,6 +731,22 @@ const Seance = (() => {
       }
     } catch(e) {}
 
+    // Sauvegarder l'historique local des séances (pour page Profil)
+    try {
+      const histKey  = 'fitlife-workout-history';
+      const existing = JSON.parse(localStorage.getItem(histKey) || '[]');
+      existing.unshift({
+        name:        _state.plan.label || 'Séance',
+        date:        new Date().toISOString(),
+        duration_min: min,
+        calories:    kcal,
+        xp_earned:   xp,
+        sets:        _state.totalSetsCompleted,
+      });
+      // Garder les 50 dernières
+      localStorage.setItem(histKey, JSON.stringify(existing.slice(0, 50)));
+    } catch(e) {}
+
     // Sauvegarder en DB
     if (STATE.user?.id) {
       DB.saveProfile(STATE.user.id).catch(() => {});
