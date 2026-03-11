@@ -150,7 +150,7 @@ const Render = {
       <!-- Top bar -->
       <div class="home-topbar">
         <div class="home-topbar-left">
-          <div class="home-topbar-avatar" onclick="navigate('profile')">${initials}</div>
+          <div class="home-topbar-avatar" onclick="_openAccountSheet()">${initials}</div>
           <div class="home-topbar-greet">${greet}, <span>${firstName}</span> 👋</div>
         </div>
         <div class="home-topbar-right">
@@ -217,6 +217,15 @@ const Render = {
           ${challenges.map(c => _buildChallengeCard(c)).join('')}
         </div>
 
+           <!-- Galerie séances bonus -->
+        <div class="home-section">
+          <div class="home-section-title">🎯 Séances bonus</div>
+          <button class="home-section-action" onclick="showToast('Fais une séance bonus pour gagner des points extra !','default')">?</button>
+        </div>
+        <div class="home-bonus-scroll">
+          ${_buildBonusPrograms()}
+        </div>
+
         <!-- Spacer nav flottante -->
         <div class="nav-spacer"></div>
       </div>
@@ -235,16 +244,8 @@ const Render = {
   },
 
   profile() {
-    const screen = document.getElementById('screen-profile');
-    if (!screen) return;
-    screen.innerHTML = `
-      <div class="screen-body" style="display:flex;align-items:center;justify-content:center;padding:40px">
-        <div style="text-align:center;color:var(--muted)">
-          <div style="font-size:48px;margin-bottom:12px">👤</div>
-          <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--text)">Profil — étape 4</div>
-        </div>
-      </div>
-    `;
+    // Délégué à Profile module
+    if (typeof Profile !== 'undefined') { Profile.init(); Profile.render(); }
   },
 };
 
@@ -465,4 +466,307 @@ function _launchOrProgram() {
   setTimeout(() => {
     if (typeof Prog !== 'undefined') { Prog.init(); Prog.render(); }
   }, 50);
+}
+
+/* ══════════════════════════════════════════════════════
+   GALERIE SÉANCES BONUS
+   Programmes express au choix, indépendants du programme
+   principal. Chaque séance rapporte des points bonus.
+══════════════════════════════════════════════════════ */
+const BONUS_PROGRAMS = [
+  {
+    id: 'bonus_hiit',
+    icon: '🔥',
+    name: 'HIIT Express',
+    sub: '20 min · Brûle-graisses',
+    pts: 120,
+    color: 'linear-gradient(135deg,#FF6B00,#E53E00)',
+    goal: 'poids',
+    exercises: [
+      { nom:'Burpees',         sets:3, reps:'10', repos:45,  muscles:['Corps entier'], icon:'🏃' },
+      { nom:'Mountain climbers', sets:3, reps:'20', repos:30, muscles:['Abdos','Épaules'], icon:'🧗' },
+      { nom:'Jump squats',     sets:3, reps:'12', repos:45,  muscles:['Jambes','Fessiers'], icon:'🦵' },
+      { nom:'High knees',      sets:3, reps:'30s',repos:30,  muscles:['Cardio','Jambes'], icon:'🏃' },
+    ],
+  },
+  {
+    id: 'bonus_upper',
+    icon: '💪',
+    name: 'Upper Body',
+    sub: '25 min · Haut du corps',
+    pts: 100,
+    color: 'linear-gradient(135deg,#7C3AED,#5B21B6)',
+    goal: 'muscle',
+    exercises: [
+      { nom:'Pompes',           sets:4, reps:'12', repos:60, muscles:['Pectoraux','Triceps'], icon:'💪' },
+      { nom:'Dips chaise',      sets:3, reps:'12', repos:60, muscles:['Triceps'], icon:'🪑' },
+      { nom:'Pike push-ups',    sets:3, reps:'10', repos:60, muscles:['Épaules'], icon:'🔱' },
+      { nom:'Planche',          sets:3, reps:'40s',repos:45, muscles:['Abdos','Gainage'], icon:'🧘' },
+    ],
+  },
+  {
+    id: 'bonus_lower',
+    icon: '🦵',
+    name: 'Jambes Power',
+    sub: '25 min · Jambes & Fessiers',
+    pts: 100,
+    color: 'linear-gradient(135deg,#16A34A,#15803D)',
+    goal: 'muscle',
+    exercises: [
+      { nom:'Squats',           sets:4, reps:'15', repos:60, muscles:['Quadriceps','Fessiers'], icon:'🏋️' },
+      { nom:'Fentes alternées', sets:3, reps:'12', repos:60, muscles:['Jambes'], icon:'🦵' },
+      { nom:'Hip thrust',       sets:3, reps:'15', repos:60, muscles:['Fessiers'], icon:'🍑' },
+      { nom:'Mollets debout',   sets:3, reps:'20', repos:45, muscles:['Mollets'], icon:'💪' },
+    ],
+  },
+  {
+    id: 'bonus_cardio',
+    icon: '❤️',
+    name: 'Cardio Zone',
+    sub: '30 min · Endurance',
+    pts: 90,
+    color: 'linear-gradient(135deg,#EF4444,#B91C1C)',
+    goal: 'cardio',
+    exercises: [
+      { nom:'Corde à sauter',   sets:4, reps:'2 min',repos:60, muscles:['Corps entier'], icon:'🪢' },
+      { nom:'Box step',         sets:3, reps:'1 min',repos:45, muscles:['Jambes','Cardio'], icon:'📦' },
+      { nom:'Shadow boxing',    sets:3, reps:'2 min',repos:60, muscles:['Épaules','Cardio'], icon:'🥊' },
+      { nom:'Jumping jacks',    sets:3, reps:'40s', repos:30, muscles:['Corps entier'], icon:'⭐' },
+    ],
+  },
+  {
+    id: 'bonus_core',
+    icon: '🎯',
+    name: 'Core & Abdos',
+    sub: '20 min · Gainage',
+    pts: 85,
+    color: 'linear-gradient(135deg,#2563EB,#1D4ED8)',
+    goal: 'mobilite',
+    exercises: [
+      { nom:'Planche avant',    sets:4, reps:'45s', repos:30, muscles:['Abdos','Gainage'], icon:'🧘' },
+      { nom:'Crunchs',          sets:3, reps:'20',  repos:30, muscles:['Abdos'], icon:'💪' },
+      { nom:'Relevés de jambes',sets:3, reps:'15',  repos:45, muscles:['Abdos bas'], icon:'🦵' },
+      { nom:'Russian twist',    sets:3, reps:'20',  repos:30, muscles:['Obliques'], icon:'🔄' },
+    ],
+  },
+  {
+    id: 'bonus_mobility',
+    icon: '🧘',
+    name: 'Mobilité & Yoga',
+    sub: '20 min · Récupération',
+    pts: 70,
+    color: 'linear-gradient(135deg,#D97706,#B45309)',
+    goal: 'mobilite',
+    exercises: [
+      { nom:'Salutation soleil', sets:3, reps:'5',  repos:30, muscles:['Corps entier'], icon:'☀️' },
+      { nom:'Pigeon pose',       sets:2, reps:'60s',repos:30, muscles:['Hanches'], icon:'🕊️' },
+      { nom:'Cat-cow',           sets:3, reps:'10', repos:20, muscles:['Dos','Core'], icon:'🐱' },
+      { nom:'World greatest stretch', sets:2, reps:'8', repos:30, muscles:['Corps entier'], icon:'🌍' },
+    ],
+  },
+];
+
+function _buildBonusPrograms() {
+  // Trier par affinité avec l'objectif du user
+  const userGoal = STATE.profile.goal;
+  const sorted = [...BONUS_PROGRAMS].sort((a, b) => {
+    if (a.goal === userGoal && b.goal !== userGoal) return -1;
+    if (b.goal === userGoal && a.goal !== userGoal) return 1;
+    return 0;
+  });
+
+  return sorted.map(p => `
+    <div class="bonus-card" onclick="_launchBonus('${p.id}')">
+      <div class="bonus-card-bg" style="background:${p.color}">
+        <div class="bonus-card-icon">${p.icon}</div>
+        <div class="bonus-pts-pill">+${p.pts} pts</div>
+      </div>
+      <div class="bonus-card-body">
+        <div class="bonus-card-name">${p.name}</div>
+        <div class="bonus-card-sub">${p.sub}</div>
+        <div class="bonus-card-exos">${p.exercises.length} exercices</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function _launchBonus(id) {
+  const prog = BONUS_PROGRAMS.find(p => p.id === id);
+  if (!prog) return;
+
+  // Construire un plan compatible avec Seance.init()
+  const plan = {
+    label:     prog.name,
+    duration:  prog.sub.match(/\d+/)?.[0] || 20,
+    exercises: prog.exercises,
+    isBonus:   true,
+    bonusId:   id,
+    bonusPts:  prog.pts,
+    moodTag:   '',
+    moodSuggestion: '',
+  };
+
+  STATE.activeWorkout = plan;
+  navigate('seance');
+  setTimeout(() => Seance.init(plan), 50);
+}
+
+/* ══════════════════════════════════════════════════════
+   POP-UP COMPTE — clic sur l'avatar
+   Prénom, Nom, Année de naissance, Genre
+══════════════════════════════════════════════════════ */
+function _openAccountSheet() {
+  // Fermer si déjà ouverte
+  document.getElementById('account-sheet-overlay')?.remove();
+
+  const user = STATE.user || {};
+  const overlay = document.createElement('div');
+  overlay.id = 'account-sheet-overlay';
+  overlay.style.cssText = `
+    position:fixed;inset:0;background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    z-index:500;display:flex;align-items:flex-end;
+  `;
+  overlay.onclick = e => { if (e.target === overlay) _closeAccountSheet(); };
+
+  overlay.innerHTML = `
+  <div id="account-sheet" style="
+    width:100%;background:var(--surface);
+    border-radius:28px 28px 0 0;
+    padding:24px 20px calc(28px + env(safe-area-inset-bottom));
+    animation:slideUpSheet 0.32s cubic-bezier(0.22,1,0.36,1);
+    max-height:90dvh;overflow-y:auto;
+  ">
+    <style>@keyframes slideUpSheet{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>
+
+    <!-- Handle -->
+    <div style="width:36px;height:4px;background:var(--border2);border-radius:99px;margin:0 auto 20px;"></div>
+
+    <!-- Titre -->
+    <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:19px;color:var(--text);margin-bottom:6px;">
+      Mon compte
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:22px;">${user.email || ''}</div>
+
+    <!-- Prénom -->
+    <div class="acc-field-label">Prénom</div>
+    <input id="acc-firstname" class="acc-input" type="text"
+      placeholder="Ton prénom" value="${user.firstName || ''}"
+      autocomplete="given-name" inputmode="text">
+
+    <!-- Nom -->
+    <div class="acc-field-label">Nom</div>
+    <input id="acc-lastname" class="acc-input" type="text"
+      placeholder="Ton nom" value="${user.lastName || ''}"
+      autocomplete="family-name" inputmode="text">
+
+    <!-- Genre -->
+    <div class="acc-field-label">Genre</div>
+    <div class="acc-gender-row">
+      <button class="acc-gender-btn${(user.gender||'')==='homme'?' acc-gender-active':''}"
+              onclick="_setGender('homme',this)">
+        👨 Homme
+      </button>
+      <button class="acc-gender-btn${(user.gender||'')==='femme'?' acc-gender-active':''}"
+              onclick="_setGender('femme',this)">
+        👩 Femme
+      </button>
+      <button class="acc-gender-btn${(user.gender||'')==='autre'?' acc-gender-active':''}"
+              onclick="_setGender('autre',this)">
+        🌈 Autre
+      </button>
+    </div>
+
+    <!-- Année de naissance -->
+    <div class="acc-field-label">Année de naissance</div>
+    <input id="acc-birthyear" class="acc-input" type="number"
+      placeholder="Ex: 1990" value="${user.birthYear || ''}"
+      min="1940" max="2010" inputmode="numeric">
+
+    <!-- Boutons -->
+    <div style="display:flex;gap:10px;margin-top:24px;">
+      <button onclick="_closeAccountSheet()" style="
+        flex:1;padding:13px;border-radius:99px;
+        background:var(--bg2);border:1px solid var(--border);
+        color:var(--text2);font-family:'Sora',sans-serif;
+        font-weight:700;font-size:14px;cursor:pointer;
+      ">Annuler</button>
+      <button onclick="_saveAccount()" style="
+        flex:2;padding:13px;border-radius:99px;
+        background:var(--orange);border:none;color:#fff;
+        font-family:'Sora',sans-serif;font-weight:700;
+        font-size:14px;cursor:pointer;
+        box-shadow:0 6px 24px rgba(255,107,0,0.38);
+      ">💾 Sauvegarder</button>
+    </div>
+
+    <!-- Déconnexion -->
+    <button onclick="_confirmSignOut()" style="
+      width:100%;margin-top:12px;padding:12px;
+      border-radius:99px;background:var(--red-muted);
+      border:none;color:var(--red);font-family:'Sora',sans-serif;
+      font-weight:700;font-size:13px;cursor:pointer;
+    ">🚪 Déconnexion</button>
+  </div>`;
+
+  document.getElementById('app')?.appendChild(overlay);
+}
+
+function _setGender(val, btn) {
+  document.querySelectorAll('.acc-gender-btn').forEach(b => b.classList.remove('acc-gender-active'));
+  btn.classList.add('acc-gender-active');
+  STATE.user = STATE.user || {};
+  STATE.user.gender = val;
+}
+
+function _saveAccount() {
+  const fn = document.getElementById('acc-firstname')?.value?.trim() || '';
+  const ln = document.getElementById('acc-lastname')?.value?.trim()  || '';
+  const by = document.getElementById('acc-birthyear')?.value?.trim() || '';
+
+  if (fn.length < 2) { showToast('Prénom trop court (min. 2 caractères)', 'error'); return; }
+
+  STATE.user = STATE.user || {};
+  STATE.user.firstName = fn;
+  STATE.user.lastName  = ln;
+  STATE.user.initials  = ((fn[0]||'') + (ln[0]||'')).toUpperCase() || '?';
+  if (by) STATE.user.birthYear = by;
+
+  // Calculer ageGroup depuis birthYear
+  if (by) {
+    const age = new Date().getFullYear() - parseInt(by);
+    if      (age < 25) STATE.profile.ageGroup = '18';
+    else if (age < 40) STATE.profile.ageGroup = '30';
+    else if (age < 50) STATE.profile.ageGroup = '45';
+    else if (age < 55) STATE.profile.ageGroup = '52';
+    else if (age < 65) STATE.profile.ageGroup = '60';
+    else               STATE.profile.ageGroup = '70';
+  }
+
+  // Sauvegarder en DB
+  if (STATE.user?.id) {
+    DB.upsert('profiles', {
+      id:         STATE.user.id,
+      first_name: fn,
+      last_name:  ln,
+      gender:     STATE.user.gender || null,
+      birth_year: by ? parseInt(by) : null,
+      age_group:  STATE.profile.ageGroup,
+    }).catch(() => {});
+  }
+
+  _closeAccountSheet();
+  showToast('✅ Profil mis à jour !', 'success');
+  Render.home(); // Rafraîchir les initiales
+}
+
+function _closeAccountSheet() {
+  document.getElementById('account-sheet-overlay')?.remove();
+}
+
+function _confirmSignOut() {
+  _closeAccountSheet();
+  setTimeout(() => {
+    if (confirm('Se déconnecter de FitLife IA ?')) signOut();
+  }, 100);
 }
